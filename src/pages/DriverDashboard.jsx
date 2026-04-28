@@ -4,7 +4,6 @@ import SlotCard from '../components/SlotCard'
 import PaymentBreakdown from '../components/PaymentBreakdown'
 import InvoiceScreen from '../components/InvoiceScreen'
 import RatingForm from '../components/RatingForm'
-import SystemLogsPanel from '../components/SystemLogsPanel'
 import BookingPanel from '../components/BookingPanel'
 import RouteMap from '../components/RouteMap'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -478,7 +477,6 @@ function DriverDashboard() {
               Find the perfect parking spot near you
             </p>
           </div>
-          <SystemLogsPanel />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">

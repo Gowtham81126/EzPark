@@ -3,7 +3,6 @@ import { useStore, BookingStatus } from '../store/useStore'
 import SlotCard from '../components/SlotCard'
 import ConfirmedBookingCard from '../components/ConfirmedBookingCard'
 import RatingForm from '../components/RatingForm'
-import SystemLogsPanel from '../components/SystemLogsPanel'
 import InvoiceScreen from '../components/InvoiceScreen'
 import { getOverstayData, formatOverstayTime } from '../utils/overstayCalculator'
 import { userDatabase } from '../utils/userDatabase'
@@ -241,7 +240,6 @@ function OwnerDashboard() {
               Manage your parking locations and track bookings
             </p>
           </div>
-          <SystemLogsPanel />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
