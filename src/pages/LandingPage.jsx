@@ -368,20 +368,6 @@ function LandingPage() {
             <img src="/images/logo.svg" alt="EzPark" className="h-7 w-auto opacity-80" />
             <span className="text-gray-400 font-semibold">EzPark</span>
           </div>
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() => navigate('/about')}
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              About Us
-            </button>
-            <button
-              onClick={() => navigate('/contact')}
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Contact Us
-            </button>
-          </div>
           <p className="text-gray-500 text-sm">© 2026 EzPark</p>
         </div>
       </footer>
