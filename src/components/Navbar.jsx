@@ -21,6 +21,18 @@ function Navbar() {
 
         <div className="flex items-center gap-4">
           <Link
+            to="/about"
+            className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+          >
+            About
+          </Link>
+          <Link
+            to="/contact"
+            className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+          >
+            Contact
+          </Link>
+          <Link
             to="/profile"
             className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
           >

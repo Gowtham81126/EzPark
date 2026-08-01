@@ -137,6 +137,18 @@ function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <button
+              onClick={() => navigate('/about')}
+              className="text-sm font-medium text-white hover:text-blue-100 transition-colors px-3 py-2"
+            >
+              About
+            </button>
+            <button
+              onClick={() => navigate('/contact')}
+              className="text-sm font-medium text-white hover:text-blue-100 transition-colors px-3 py-2"
+            >
+              Contact
+            </button>
+            <button
               onClick={() => navigate('/login')}
               className="text-sm font-medium text-white hover:text-blue-100 transition-colors px-4 py-2"
             >
@@ -351,10 +363,24 @@ function LandingPage() {
 
       {/* ── Footer ── */}
       <footer className="bg-gray-900 py-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <img src="/images/logo.svg" alt="EzPark" className="h-7 w-auto opacity-80" />
             <span className="text-gray-400 font-semibold">EzPark</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => navigate('/about')}
+              className="text-gray-400 hover:text-white text-sm transition-colors"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => navigate('/contact')}
+              className="text-gray-400 hover:text-white text-sm transition-colors"
+            >
+              Contact Us
+            </button>
           </div>
           <p className="text-gray-500 text-sm">© 2026 EzPark</p>
         </div>

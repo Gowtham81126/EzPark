@@ -6,6 +6,8 @@ import ErrorBoundary from './components/ErrorBoundary'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
 import ProfilePage from './pages/ProfilePage'
 import MainScreen from './pages/MainScreen'
 import CreateParkingSlotPage from './pages/CreateParkingSlotPage'
@@ -111,6 +113,8 @@ function App() {
             path="/signup"
             element={isLoggedIn ? <Navigate to="/main" /> : <ErrorBoundary><SignupPage /></ErrorBoundary>}
           />
+          <Route path="/about" element={<ErrorBoundary><AboutPage /></ErrorBoundary>} />
+          <Route path="/contact" element={<ErrorBoundary><ContactPage /></ErrorBoundary>} />
           <Route
             path="/profile"
             element={isLoggedIn ? <ErrorBoundary><ProfilePage /></ErrorBoundary> : <Navigate to="/" />}
