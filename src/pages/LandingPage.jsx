@@ -161,7 +161,7 @@ function LandingPage() {
         <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6 border border-white/30">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Peer-to-peer · OTP secured · Real-time
+            Peer-to-peer
           </div>
           <h1 className="text-5xl sm:text-6xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg">
             Park smarter,<br />
