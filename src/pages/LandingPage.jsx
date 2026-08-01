@@ -108,20 +108,20 @@ function LandingPage() {
 
   const otpPoints = [
     {
-      label: 'Secure check-in',
-      detail: 'A unique OTP is generated for every confirmed booking. The driver shares it with the owner on arrival — the slot is only unlocked after the code is matched.',
+      label: 'OTP-verified check-in',
+      detail: 'A unique one-time password is generated for every confirmed booking. The driver presents it on arrival — the slot is handed over only after the code matches, eliminating unauthorized access entirely.',
     },
     {
-      label: 'No stranger access',
-      detail: 'Unlike public lots, your space is accessible only to the specific driver who booked it. No ticket machines, no anonymous entry.',
+      label: 'Phone-verified identities',
+      detail: 'Every driver and owner on EzPark registers with a verified phone number. There are no anonymous users — every person on the platform is accountable, traceable, and real.',
     },
     {
-      label: 'Time-bound codes',
-      detail: 'OTPs are valid only within the booked window. Early arrivals and overstays are automatically flagged, keeping owners fully protected.',
+      label: 'Time-locked slot access',
+      detail: 'Bookings are enforced to the minute. Access is only valid within the confirmed window; early arrivals are held and overstays are automatically flagged and penalized — protecting owners around the clock.',
     },
     {
-      label: 'Tamper-proof handoff',
-      detail: 'The system closes the booking only after OTP verification — creating an auditable record for every transaction, end to end.',
+      label: 'Full audit trail',
+      detail: 'Every booking, check-in, payment, and status change is logged in an immutable record. Both parties can review the complete history of any transaction, giving full accountability from start to finish.',
     },
   ]
 
