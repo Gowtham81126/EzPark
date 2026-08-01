@@ -161,11 +161,11 @@ function LandingPage() {
         <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6 border border-white/30">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Peer-to-peer
+            Peer-to-peer system
           </div>
           <h1 className="text-5xl sm:text-6xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg">
             Park smarter,<br />
-            <span className="text-blue-300">stress less.</span>
+            <span className="text-blue-300">earn effortlessly.</span>
           </h1>
           <p className="text-lg sm:text-xl text-blue-100 mb-10 leading-relaxed">
             EzPark connects drivers directly with private space owners — skip the packed public lots, book a verified spot near you, and navigate there in one tap.
