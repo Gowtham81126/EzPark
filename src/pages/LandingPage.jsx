@@ -108,7 +108,7 @@ function LandingPage() {
 
   const otpPoints = [
     {
-      label: 'OTP-verified check-in',
+      label: 'OTP-verified system',
       detail: 'A unique one-time password is generated for every confirmed booking. The driver presents it on arrival — the slot is handed over only after the code matches, eliminating unauthorized access entirely.',
     },
     {
