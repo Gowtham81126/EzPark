@@ -197,7 +197,7 @@ function LandingPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to find your spot?</h2>
           <p className="text-blue-100 text-lg mb-10">
-            Join thousands of drivers already using ParkEasy to save time and money.
+            Join ParkEasy to save time and money.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
