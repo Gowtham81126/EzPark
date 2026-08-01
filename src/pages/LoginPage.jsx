@@ -134,6 +134,15 @@ function LoginPage() {
                 Sign Up
               </button>
             </p>
+            <p className="text-sm text-gray-500 mt-2">
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="text-gray-400 hover:text-gray-600 font-medium"
+              >
+                ← Back to Home
+              </button>
+            </p>
           </div>
         </form>
       </div>

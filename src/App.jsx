@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useStore, BookingStatus } from './store/useStore'
 import Navbar from './components/Navbar'
 import ErrorBoundary from './components/ErrorBoundary'
+import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import ProfilePage from './pages/ProfilePage'
@@ -100,6 +101,10 @@ function App() {
         <Routes>
           <Route
             path="/"
+            element={isLoggedIn ? <Navigate to="/main" /> : <ErrorBoundary><LandingPage /></ErrorBoundary>}
+          />
+          <Route
+            path="/login"
             element={isLoggedIn ? <Navigate to="/main" /> : <ErrorBoundary><LoginPage /></ErrorBoundary>}
           />
           <Route

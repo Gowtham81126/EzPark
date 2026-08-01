@@ -82,7 +82,7 @@ function SignupPage() {
       setSuccess(true)
       // Redirect to login page after 2 seconds
       setTimeout(() => {
-        navigate('/')
+        navigate('/login')
       }, 2000)
     } else {
       setError(result.error || 'Signup failed. Please try again.')
@@ -232,7 +232,7 @@ function SignupPage() {
               Already have an account?{' '}
               <button
                 type="button"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/login')}
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
                 Login
