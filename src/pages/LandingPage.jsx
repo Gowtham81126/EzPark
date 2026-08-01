@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom'
 function LandingPage() {
   const navigate = useNavigate()
 
-  const features = [
+  const driverFeatures = [
     {
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       ),
-      title: 'Interactive Map',
-      description: 'Discover nearby parking spots on a live map powered by real-time location data.',
+      title: 'Live Map Discovery',
+      description: 'Browse real peer-listed parking slots near you on an interactive map — updated in real time.',
     },
     {
       icon: (
@@ -20,7 +20,7 @@ function LandingPage() {
         </svg>
       ),
       title: 'Instant Booking',
-      description: 'Reserve your parking slot in seconds and get a confirmed booking right away.',
+      description: 'Reserve a slot in seconds and receive a confirmed booking with all owner details.',
     },
     {
       icon: (
@@ -30,16 +30,7 @@ function LandingPage() {
         </svg>
       ),
       title: 'Turn-by-Turn Navigation',
-      description: 'Get precise directions straight to your booked spot with built-in route guidance.',
-    },
-    {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-      ),
-      title: 'List Your Slot',
-      description: 'Own a parking space? List it on ParkEasy and start earning from idle spots.',
+      description: 'Get routed directly to your booked spot — no guessing, no circling.',
     },
     {
       icon: (
@@ -48,7 +39,7 @@ function LandingPage() {
         </svg>
       ),
       title: 'Real-Time Availability',
-      description: 'See live slot availability so you never waste time driving to a full lot.',
+      description: 'See only open slots — availability updates the moment an owner changes it.',
     },
     {
       icon: (
@@ -57,14 +48,81 @@ function LandingPage() {
         </svg>
       ),
       title: 'Transparent Pricing',
-      description: 'Clear breakdown of charges with no hidden fees — pay only for what you use.',
+      description: 'Full payment breakdown before you confirm — no hidden fees, ever.',
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+        </svg>
+      ),
+      title: 'Rate Your Experience',
+      description: 'Leave a review after every booking to help the community find the best spots.',
+    },
+  ]
+
+  const ownerBenefits = [
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: 'Earn from Your Idle Space',
+      description: "Your driveway, garage, or private lot sits empty most of the day. List it on EzPark and convert that dead space into a steady stream of passive income — on your schedule.",
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      ),
+      title: 'Full Scheduling Control',
+      description: 'Set your own availability windows. Block dates, adjust hours, and manage bookings from your dashboard. You decide when your slot is open — EzPark handles the rest.',
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      title: 'Live Booking Dashboard',
+      description: 'Track incoming bookings, driver arrivals, overstay alerts, and earnings — all from a single owner dashboard built for clarity.',
+    },
+    {
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      title: 'Verified Drivers Only',
+      description: 'Every driver on EzPark is a registered, verified user. OTP-secured check-ins mean only the confirmed booking holder can access your space.',
     },
   ]
 
   const steps = [
-    { number: '01', title: 'Sign up', description: 'Create your free account in under a minute.' },
-    { number: '02', title: 'Find a spot', description: 'Browse the map and pick a slot near your destination.' },
-    { number: '03', title: 'Book & navigate', description: 'Confirm your booking and follow the route to arrive stress-free.' },
+    { number: '01', title: 'Sign up free', description: 'Create your account in under a minute — as a driver or a space owner.' },
+    { number: '02', title: 'Find or list a spot', description: 'Drivers browse the map; owners publish their space with a few taps.' },
+    { number: '03', title: 'Book, verify & go', description: 'Confirm your booking, verify with OTP at the spot, and you\'re done.' },
+  ]
+
+  const otpPoints = [
+    {
+      label: 'Secure check-in',
+      detail: 'A unique OTP is generated for every confirmed booking. The driver shares it with the owner on arrival — the slot is only unlocked after the code is matched.',
+    },
+    {
+      label: 'No stranger access',
+      detail: 'Unlike public lots, your space is accessible only to the specific driver who booked it. No ticket machines, no anonymous entry.',
+    },
+    {
+      label: 'Time-bound codes',
+      detail: 'OTPs are valid only within the booked window. Early arrivals and overstays are automatically flagged, keeping owners fully protected.',
+    },
+    {
+      label: 'Tamper-proof handoff',
+      detail: 'The system closes the booking only after OTP verification — creating an auditable record for every transaction, end to end.',
+    },
   ]
 
   return (
@@ -74,8 +132,8 @@ function LandingPage() {
       <header className="absolute top-0 left-0 right-0 z-20">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="ParkEasy" className="h-9 w-auto" />
-            <span className="text-xl font-bold text-white drop-shadow">ParkEasy</span>
+            <img src="/images/logo.png" alt="EzPark" className="h-9 w-auto" />
+            <span className="text-xl font-bold text-white drop-shadow">EzPark</span>
           </div>
           <div className="flex items-center gap-3">
             <button
@@ -103,15 +161,14 @@ function LandingPage() {
         <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6 border border-white/30">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Real-time parking availability
+            Peer-to-peer · OTP secured · Real-time
           </div>
           <h1 className="text-5xl sm:text-6xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg">
             Park smarter,<br />
             <span className="text-blue-300">stress less.</span>
           </h1>
           <p className="text-lg sm:text-xl text-blue-100 mb-10 leading-relaxed">
-            Find, book, and navigate to parking spots in your city — all from one app.
-            No more circling the block.
+            EzPark connects drivers directly with private space owners — skip the packed public lots, book a verified spot near you, and navigate there in one tap.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
@@ -128,8 +185,6 @@ function LandingPage() {
             </button>
           </div>
         </div>
-
-        {/* scroll cue */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 flex flex-col items-center gap-1 animate-bounce">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -137,19 +192,18 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ── Features ── */}
+      {/* ── Driver Features ── */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-sm font-semibold text-blue-600 uppercase tracking-widest">Why ParkEasy?</span>
+            <span className="text-sm font-semibold text-blue-600 uppercase tracking-widest">For Drivers</span>
             <h2 className="mt-2 text-4xl font-bold text-gray-900">Everything you need to park with ease</h2>
             <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
-              Built for drivers and parking owners alike — a complete solution for urban parking.
+              From discovery to directions — EzPark handles every step of your parking journey.
             </p>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((f) => (
+            {driverFeatures.map((f) => (
               <div
                 key={f.title}
                 className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all"
@@ -165,19 +219,98 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ── How it works ── */}
+      {/* ── Owner Advantages ── */}
       <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-sm font-semibold text-blue-600 uppercase tracking-widest">For Space Owners</span>
+            <h2 className="mt-2 text-4xl font-bold text-gray-900">Turn your empty space into income</h2>
+            <p className="mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
+              Whether you own a driveway, a garage bay, or a private lot, EzPark gives you the tools to list it, manage bookings, and earn — entirely on your terms.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {ownerBenefits.map((b) => (
+              <div
+                key={b.title}
+                className="flex gap-5 p-7 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all bg-gray-50"
+              >
+                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow">
+                  {b.icon}
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{b.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{b.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <button
+              onClick={() => navigate('/signup')}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-xl shadow transition-all hover:scale-105"
+            >
+              List Your Space for Free
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── OTP Security ── */}
+      <section className="py-24 bg-gradient-to-br from-blue-900 to-blue-700 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <svg width="100%" height="100%"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)" /></svg>
+        </div>
+        <div className="relative max-w-6xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            {/* Left text */}
+            <div className="lg:w-1/2">
+              <span className="text-sm font-semibold text-blue-300 uppercase tracking-widest">Security</span>
+              <h2 className="mt-2 text-4xl font-bold text-white leading-tight mb-6">
+                OTP-secured handoffs — unlike any traditional parking system
+              </h2>
+              <p className="text-blue-100 text-lg leading-relaxed mb-6">
+                Traditional parking relies on anonymous tickets and unmanned barriers — anyone with a token can enter. EzPark replaces that with a one-time password (OTP) system that ties every booking to a specific, verified person.
+              </p>
+              <p className="text-blue-200 text-base leading-relaxed">
+                The OTP is generated the moment a booking is confirmed and expires at the end of the booked slot. No code, no access — it's that simple.
+              </p>
+            </div>
+            {/* Right cards */}
+            <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+              {otpPoints.map((p) => (
+                <div key={p.label} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-7 h-7 rounded-full bg-green-400 flex items-center justify-center flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h4 className="text-white font-semibold text-sm">{p.label}</h4>
+                  </div>
+                  <p className="text-blue-200 text-sm leading-relaxed">{p.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-sm font-semibold text-blue-600 uppercase tracking-widest">How it works</span>
             <h2 className="mt-2 text-4xl font-bold text-gray-900">Parked in three easy steps</h2>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {steps.map((step, i) => (
               <div key={step.number} className="flex flex-col items-center text-center">
                 <div className="relative mb-6">
-                  <span className="text-7xl font-black text-blue-50 select-none leading-none">{step.number}</span>
+                  <span className="text-7xl font-black text-blue-100 select-none leading-none">{step.number}</span>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-10 h-10 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center shadow">
                       {i + 1}
@@ -197,7 +330,7 @@ function LandingPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to find your spot?</h2>
           <p className="text-blue-100 text-lg mb-10">
-            Join ParkEasy to save time and money.
+            Join EzPark to save time and money.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
@@ -220,10 +353,10 @@ function LandingPage() {
       <footer className="bg-gray-900 py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="ParkEasy" className="h-7 w-auto opacity-80" />
-            <span className="text-gray-400 font-semibold">ParkEasy</span>
+            <img src="/images/logo.png" alt="EzPark" className="h-7 w-auto opacity-80" />
+            <span className="text-gray-400 font-semibold">EzPark</span>
           </div>
-          <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ParkEasy. Built by Gowtham.</p>
+          <p className="text-gray-500 text-sm">© 2026 EzPark</p>
         </div>
       </footer>
 

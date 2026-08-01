@@ -45,8 +45,8 @@ function LoginPage() {
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/images/logo.png" alt="ParkEasy" className="h-12 w-auto" />
-            <h1 className="text-4xl font-bold text-gray-800">ParkEasy</h1>
+            <img src="/images/logo.png" alt="EzPark" className="h-12 w-auto" />
+            <h1 className="text-4xl font-bold text-gray-800">EzPark</h1>
           </div>
           <p className="text-gray-500">Find and book parking spots instantly</p>
         </div>

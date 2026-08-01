@@ -121,7 +121,7 @@ export const mockParkingSlots = [
 export const mockNotifications = [
   {
     id: 'n1',
-    message: 'Welcome to ParkEasy !!',
+    message: 'Welcome to EzPark !!',
     type: 'info',
     timestamp: new Date().toISOString(),
   },
