@@ -18,7 +18,7 @@ function MainScreen() {
       <div className="flex-1 flex items-center justify-center px-4 relative z-10">
         <div className="text-center max-w-2xl">
           {/* Logo */}
-          <img src="/images/logo.png" alt="ParkEasy" className="w-48 h-auto mb-6 mx-auto" />
+          <img src="/images/logo.svg" alt="EzPark" className="w-48 h-auto mb-6 mx-auto" />
 
           {/* Subtitle */}
           <p className="text-lg text-gray-600 mb-10 max-w-lg mx-auto leading-relaxed">

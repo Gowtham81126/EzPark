@@ -132,7 +132,7 @@ function LandingPage() {
       <header className="absolute top-0 left-0 right-0 z-20">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="EzPark" className="h-9 w-auto" />
+            <img src="/images/logo.svg" alt="EzPark" className="h-9 w-auto" />
             <span className="text-xl font-bold text-white drop-shadow">EzPark</span>
           </div>
           <div className="flex items-center gap-3">
@@ -353,7 +353,7 @@ function LandingPage() {
       <footer className="bg-gray-900 py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="EzPark" className="h-7 w-auto opacity-80" />
+            <img src="/images/logo.svg" alt="EzPark" className="h-7 w-auto opacity-80" />
             <span className="text-gray-400 font-semibold">EzPark</span>
           </div>
           <p className="text-gray-500 text-sm">© 2026 EzPark</p>

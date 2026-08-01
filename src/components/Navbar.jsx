@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="EzPark" className="h-8 w-auto" />
+          <img src="/images/logo.svg" alt="EzPark" className="h-8 w-auto" />
           <span className="text-xl font-bold text-primary-600 tracking-tight">EzPark</span>
         </Link>
 
