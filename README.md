@@ -63,7 +63,8 @@ http://localhost:5173
 
 
 
-<img width="1898" height="863" alt="Screenshot 2026-04-25 233330" src="https://github.com/user-attachments/assets/fed8ed52-b5dc-44fe-9aac-417357ac854c" />
+<img width="1899" height="863" alt="Screenshot 2026-08-02 164304" src="https://github.com/user-attachments/assets/d6f97a49-d7bc-450b-b229-e0856a33561c" />
+
 
 ##
 
