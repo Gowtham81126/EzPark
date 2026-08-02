@@ -1,6 +1,6 @@
-# 🚗 ParkEasy
+# 🚗 EzPark
 
-ParkEasy is a modern web application that helps users find and navigate parking locations  using an interactive map interface. It leverages real-time mapping and routing features to provide a smooth parking experience.
+EzPark is a modern web application that helps users find and navigate parking locations  using an interactive map interface. It leverages real-time mapping and routing features to provide a smooth parking experience.
 
 ---
 
