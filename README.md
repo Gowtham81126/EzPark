@@ -31,8 +31,8 @@ Follow these steps to run the project locally:
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/Gowtham81126/ParkEasy.git
-cd parkeasy
+git clone https://github.com/Gowtham81126/EzPark.git
+cd EzPark
 ```
 
 ### 2️⃣ Install dependencies
