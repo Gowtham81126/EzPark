@@ -109,11 +109,11 @@ function AboutPage() {
 
         {/* Author */}
         <section className="bg-blue-600 rounded-3xl p-10 text-center text-white">
-          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-            G
+          <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 ring-4 ring-white/30">
+            <img src="/images/gowtham.jpg" alt="Gowtham" className="w-full h-full object-cover object-top" />
           </div>
           <h2 className="text-2xl font-bold mb-1">Built by Gowtham</h2>
-          <p className="text-blue-300 text-sm mb-4">Pre-final year student · Anna University affiliated college</p>
+          <p className="text-blue-300 text-sm mb-4">Pre-final year student · Anna University affiliated college · 2026</p>
           <p className="text-blue-100 max-w-xl mx-auto leading-relaxed">
             EzPark was designed, developed, and deployed by Gowtham — driven by a passion for
             solving real urban mobility problems through clean, accessible technology.

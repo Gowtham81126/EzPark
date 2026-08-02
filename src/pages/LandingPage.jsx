@@ -228,6 +228,17 @@ function LandingPage() {
               </div>
             ))}
           </div>
+          <div className="mt-12 text-center">
+            <button
+              onClick={() => navigate('/signup')}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-xl shadow transition-all hover:scale-105"
+            >
+              Find Parking
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -262,7 +273,7 @@ function LandingPage() {
               onClick={() => navigate('/signup')}
               className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-xl shadow transition-all hover:scale-105"
             >
-              List Your Space for Free
+              List Your Space
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -363,11 +374,7 @@ function LandingPage() {
 
       {/* ── Footer ── */}
       <footer className="bg-gray-900 py-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <img src="/images/logo.svg" alt="EzPark" className="h-7 w-auto opacity-80" />
-            <span className="text-gray-400 font-semibold">EzPark</span>
-          </div>
+        <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-gray-500 text-sm">© 2026 EzPark</p>
         </div>
       </footer>

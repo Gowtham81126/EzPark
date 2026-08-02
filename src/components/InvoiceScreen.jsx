@@ -3,19 +3,17 @@ import { useState, useEffect } from 'react'
 import PaymentBreakdown from './PaymentBreakdown'
 import { userDatabase } from '../utils/userDatabase'
 
-function InvoiceScreen({ booking, breakdown, onClose, userType }) {
+function InvoiceScreen({ booking, breakdown, onClose, onContinue, userType }) {
   const navigate = useNavigate()
   const [otherUser, setOtherUser] = useState(null)
 
   useEffect(() => {
     const fetchOtherUser = async () => {
       if (!booking) return
-      
       const userId = userType === 'owner' ? booking.driverId : booking.ownerId
       const user = await userDatabase.getUserById(userId)
       setOtherUser(user)
     }
-    
     fetchOtherUser()
   }, [booking, userType])
 
@@ -27,8 +25,10 @@ function InvoiceScreen({ booking, breakdown, onClose, userType }) {
     )
   }
 
-  const handleBackToDashboard = () => {
-    if (onClose) {
+  const handleContinue = () => {
+    if (onContinue) {
+      onContinue()
+    } else if (onClose) {
       onClose()
     } else {
       navigate('/driver')
@@ -111,16 +111,10 @@ function InvoiceScreen({ booking, breakdown, onClose, userType }) {
       {/* Actions */}
       <div className="flex gap-3">
         <button
-          onClick={handleBackToDashboard}
-          className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
+          onClick={handleContinue}
+          className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
         >
-          Back to Dashboard
-        </button>
-        <button
-          onClick={() => window.print()}
-          className="flex-1 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium text-sm"
-        >
-          Print Invoice
+          Continue to Dashboard
         </button>
       </div>
     </div>

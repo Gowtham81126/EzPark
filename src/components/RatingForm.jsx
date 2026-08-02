@@ -1,92 +1,66 @@
 import { useState } from 'react'
 
 function RatingForm({ booking, userType, onSubmit, onClose }) {
-  const [ratings, setRatings] = useState({
-    punctuality: 5,
-    behavior: 5,
-    reliability: 5,
-  })
-
-  const ratingLabels = {
-    punctuality: 'Punctuality',
-    behavior: 'Behavior',
-    reliability: 'Reliability',
-  }
-
-  const ratingDescriptions = {
-    punctuality: 'How timely was the other person?',
-    behavior: 'How was their conduct during the interaction?',
-    reliability: 'How dependable were they throughout the process?',
-  }
-
-  const handleRatingChange = (field, value) => {
-    setRatings((prev) => ({ ...prev, [field]: value }))
-  }
+  const [rating, setRating] = useState(0)
+  const [hovered, setHovered] = useState(0)
 
   const handleSubmit = () => {
-    onSubmit(ratings)
-  }
-
-  const getStarColor = (rating, index) => {
-    return index < rating ? 'text-yellow-500' : 'text-gray-300'
+    if (rating === 0) return
+    onSubmit({ overall: rating, punctuality: rating, behavior: rating, reliability: rating })
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 max-w-md w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">
-          Rate {userType === 'driver' ? 'Owner' : 'Driver'}
-        </h3>
-        <button
-          onClick={onClose}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+    <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-sm w-full text-center shadow-xl">
+      <div className="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
+        <span className="text-3xl">⭐</span>
       </div>
 
-      <div className="space-y-5">
-        {Object.keys(ratings).map((field) => (
-          <div key={field}>
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <label className="font-medium text-gray-700">{ratingLabels[field]}</label>
-                <p className="text-xs text-gray-500 mt-0.5">{ratingDescriptions[field]}</p>
-              </div>
-              <span className="text-lg font-bold text-gray-800">{ratings[field]}.0</span>
-            </div>
-            <div className="flex gap-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  onClick={() => handleRatingChange(field, star)}
-                  className="text-2xl transition-transform hover:scale-110 focus:outline-none"
-                  type="button"
-                >
-                  <span className={getStarColor(ratings[field], star)}>★</span>
-                </button>
-              ))}
-            </div>
-          </div>
+      <h3 className="text-xl font-bold text-gray-900 mb-1">
+        Rate {userType === 'driver' ? 'the Owner' : 'the Driver'}
+      </h3>
+      <p className="text-gray-400 text-sm mb-7">
+        How was your overall experience?
+      </p>
+
+      {/* 5-star selector */}
+      <div className="flex justify-center gap-3 mb-3">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            onClick={() => setRating(star)}
+            onMouseEnter={() => setHovered(star)}
+            onMouseLeave={() => setHovered(0)}
+            className="text-5xl transition-transform hover:scale-110 focus:outline-none leading-none"
+          >
+            <span className={(hovered || rating) >= star ? 'text-amber-400' : 'text-gray-200'}>
+              ★
+            </span>
+          </button>
         ))}
-
-        <div className="pt-4 border-t border-gray-200">
-          <button
-            onClick={handleSubmit}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-          >
-            Submit Rating
-          </button>
-          <button
-            onClick={onClose}
-            className="w-full py-2 mt-2 text-gray-600 hover:text-gray-800 transition-colors text-sm"
-          >
-            Maybe Later
-          </button>
-        </div>
       </div>
+
+      <p className="text-sm text-gray-400 mb-7 h-5">
+        {(hovered || rating) > 0 && ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'][hovered || rating]}
+      </p>
+
+      <button
+        onClick={handleSubmit}
+        disabled={rating === 0}
+        className={`w-full py-3 rounded-xl text-sm font-semibold transition-all mb-3 ${
+          rating > 0
+            ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'
+            : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+        }`}
+      >
+        Submit Rating
+      </button>
+      <button
+        onClick={onClose}
+        className="w-full py-2 text-gray-400 hover:text-gray-600 text-sm transition-colors"
+      >
+        Skip
+      </button>
     </div>
   )
 }

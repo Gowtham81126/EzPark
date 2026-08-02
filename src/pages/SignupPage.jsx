@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userDatabase } from '../utils/userDatabase'
+import { useStore } from '../store/useStore'
 
 function SignupPage() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function SignupPage() {
   const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const login = useStore((s) => s.login)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -79,11 +81,18 @@ function SignupPage() {
     })
 
     if (result.success) {
+      // Auto-login the newly created user
+      const validation = await userDatabase.validateLogin(formData.phoneNumber.trim(), formData.password)
+      if (validation.success) {
+        const loginResult = login(validation.user)
+        if (loginResult.success) {
+          navigate('/main')
+          return
+        }
+      }
+      // Fallback: show success and redirect to login
       setSuccess(true)
-      // Redirect to login page after 2 seconds
-      setTimeout(() => {
-        navigate('/login')
-      }, 2000)
+      setTimeout(() => navigate('/login'), 2000)
     } else {
       setError(result.error || 'Signup failed. Please try again.')
     }

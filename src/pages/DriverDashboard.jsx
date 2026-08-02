@@ -407,6 +407,14 @@ function DriverDashboard() {
     setInvoiceBreakdown(null)
   }
 
+  const handleContinueToRating = () => {
+    const bookingToRate = completedBooking
+    setCompletedBooking(null)
+    setInvoiceBreakdown(null)
+    setRatingBooking(bookingToRate)
+    setShowRatingModal(true)
+  }
+
   const handleOpenRating = (booking) => {
     setRatingBooking(booking)
     setShowRatingModal(true)
@@ -723,6 +731,7 @@ function DriverDashboard() {
             booking={completedBooking}
             breakdown={invoiceBreakdown}
             onClose={handleCloseInvoice}
+            onContinue={handleContinueToRating}
             userType="driver"
           />
         </div>
