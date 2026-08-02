@@ -30,6 +30,8 @@ function OwnerDashboard() {
   const [invoiceBreakdown, setInvoiceBreakdown] = useState(null)
   const [parkingTimers, setParkingTimers] = useState({})
   const [driverDetails, setDriverDetails] = useState({})
+  const [historyFilter, setHistoryFilter] = useState('all')
+  const [showAllHistory, setShowAllHistory] = useState(false)
 
   // Track active booking IDs to prevent unnecessary timer updates
   const activeBookingIdsRef = useRef([])
@@ -539,61 +541,112 @@ function OwnerDashboard() {
           </div>
         )}
 
-        {/* ── All Other Bookings ─────────────────────────────────── */}
-        {otherBookings.length > 0 && (
-          <div className="mt-10">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">
-              Booking History
-            </h3>
-            <div className="space-y-3">
-              {otherBookings.map((b) => (
-                <div key={b.id} className="space-y-3">
-                  <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
-                    <div>
-                      <p className="font-medium text-gray-800">
-                        {getSlotName(b.slotId)}
-                      </p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        Driver: {b.driverId} &middot;{' '}
-                        {b.confirmedAt || b.requestedAt
-                          ? new Date(b.confirmedAt || b.requestedAt).toLocaleString()
-                          : 'Date unavailable'}
-                      </p>
-                    </div>
-                    <span
-                      className={`text-xs px-3 py-1.5 rounded-full font-medium border flex items-center gap-1.5 ${
-                        STATUS_BADGE[b.status] || 'bg-gray-100 text-gray-600 border-gray-300'
+        {/* ── Booking History ─────────────────────────────────── */}
+        {otherBookings.length > 0 && (() => {
+          const HISTORY_FILTERS = [
+            { key: 'all', label: 'All' },
+            { key: BookingStatus.COMPLETED, label: 'Completed' },
+            { key: BookingStatus.CANCELLED, label: 'Cancelled' },
+          ]
+          const PAGE_SIZE = 5
+          const filteredHistory = historyFilter === 'all'
+            ? otherBookings
+            : otherBookings.filter((b) => b.status === historyFilter)
+          const visibleHistory = showAllHistory ? filteredHistory : filteredHistory.slice(0, PAGE_SIZE)
+          const hasMore = !showAllHistory && filteredHistory.length > PAGE_SIZE
+
+          return (
+            <div className="mt-10">
+              {/* Header + filter tabs */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                <h3 className="text-lg font-semibold text-gray-700">Booking History</h3>
+                <div className="flex items-center gap-2">
+                  {HISTORY_FILTERS.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => { setHistoryFilter(key); setShowAllHistory(false) }}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                        historyFilter === key
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400 hover:text-blue-600'
                       }`}
                     >
-                      <span>{STATUS_ICON[b.status] || '📋'}</span>
-                      <span>{b.status.replace(/_/g, ' ')}</span>
-                    </span>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {filteredHistory.length === 0 ? (
+                <p className="text-sm text-gray-400 text-center py-6">No bookings match this filter.</p>
+              ) : (
+                <>
+                  <div className="space-y-3">
+                    {visibleHistory.map((b) => (
+                      <div key={b.id} className="space-y-3">
+                        <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+                          <div>
+                            <p className="font-medium text-gray-800">
+                              {getSlotName(b.slotId)}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1">
+                              Driver: {b.driverId} &middot;{' '}
+                              {b.confirmedAt || b.requestedAt
+                                ? new Date(b.confirmedAt || b.requestedAt).toLocaleString()
+                                : 'Date unavailable'}
+                            </p>
+                          </div>
+                          <span
+                            className={`text-xs px-3 py-1.5 rounded-full font-medium border flex items-center gap-1.5 ${
+                              STATUS_BADGE[b.status] || 'bg-gray-100 text-gray-600 border-gray-300'
+                            }`}
+                          >
+                            <span>{STATUS_ICON[b.status] || '📋'}</span>
+                            <span>{b.status.replace(/_/g, ' ')}</span>
+                          </span>
+                        </div>
+
+                        {/* Rating Prompt for Completed Bookings */}
+                        {b.status === BookingStatus.COMPLETED && !b.ownerHasRated && (
+                          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-medium text-amber-800">Rate Your Experience</p>
+                                <p className="text-xs text-amber-600 mt-1">
+                                  Please rate the driver for this booking
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => handleOpenRating(b)}
+                                className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm font-medium"
+                              >
+                                Rate Now
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
 
-                  {/* Rating Prompt for Completed Bookings */}
-                  {b.status === BookingStatus.COMPLETED && !b.ownerHasRated && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-amber-800">Rate Your Experience</p>
-                          <p className="text-xs text-amber-600 mt-1">
-                            Please rate the driver for this booking
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => handleOpenRating(b)}
-                          className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm font-medium"
-                        >
-                          Rate Now
-                        </button>
-                      </div>
+                  {/* Show More / Show Less */}
+                  {(hasMore || showAllHistory) && (
+                    <div className="mt-4 text-center">
+                      <button
+                        onClick={() => setShowAllHistory((v) => !v)}
+                        className="px-5 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-600 bg-white hover:bg-gray-50 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                      >
+                        {showAllHistory
+                          ? `Show Less`
+                          : `Show More (${filteredHistory.length - PAGE_SIZE} more)`}
+                      </button>
                     </div>
                   )}
-                </div>
-              ))}
+                </>
+              )}
             </div>
-          </div>
-        )}
+          )
+        })()}
 
         {/* Rating Form Modal */}
         {showRatingModal && ratingBooking && (
