@@ -166,8 +166,8 @@ export function createBooking({ driverId, ownerId, slotId, estimatedArrivalMinut
     estimatedArrivalTime: new Date(Date.now() + estimatedArrivalMinutes * 60 * 1000).toISOString(),
     actualArrivalTime: null,
     driverLocation, // Store driver's starting location for route display
-    driverRating: 5.0,
-    ownerRating: 5.0,
+    driverRating: 0.0,
+    ownerRating: 0.0,
     // Detailed ratings (to be filled after completion)
     driverRatings: {
       punctuality: null,

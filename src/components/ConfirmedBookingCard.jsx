@@ -7,6 +7,7 @@ function ConfirmedBookingCard({ booking }) {
   const parkingSlots = useStore((s) => s.parkingSlots)
   const cancelBooking = useStore((s) => s.cancelBooking)
   const ownerVerifyOTP = useStore((s) => s.ownerVerifyOTP)
+  const getDriverAverageRating = useStore((s) => s.getDriverAverageRating)
   const globalDriverLocation = useStore((s) => s.driverLocation)
   const bookings = useStore((s) => s.bookings)
   // Use the driver location saved in the booking, fall back to global store
@@ -115,7 +116,7 @@ function ConfirmedBookingCard({ booking }) {
             </div>
             <div className="flex justify-between text-xs text-gray-600">
               <span>Driver rating:</span>
-              <span className="font-medium">⭐ 5.0</span>
+              <span className="font-medium">⭐ {getDriverAverageRating(booking.driverId)}</span>
             </div>
           </div>
 

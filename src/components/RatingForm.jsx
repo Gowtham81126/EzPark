@@ -47,19 +47,13 @@ function RatingForm({ booking, userType, onSubmit, onClose }) {
       <button
         onClick={handleSubmit}
         disabled={rating === 0}
-        className={`w-full py-3 rounded-xl text-sm font-semibold transition-all mb-3 ${
+        className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
           rating > 0
             ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'
             : 'bg-gray-100 text-gray-400 cursor-not-allowed'
         }`}
       >
         Submit Rating
-      </button>
-      <button
-        onClick={onClose}
-        className="w-full py-2 text-gray-400 hover:text-gray-600 text-sm transition-colors"
-      >
-        Skip
       </button>
     </div>
   )

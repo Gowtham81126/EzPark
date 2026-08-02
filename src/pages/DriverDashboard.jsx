@@ -40,6 +40,7 @@ function DriverDashboard() {
   const cancelBooking = useStore((s) => s.cancelBooking)
   const calculatePaymentBreakdown = useStore((s) => s.calculatePaymentBreakdown)
   const submitRating = useStore((s) => s.submitRating)
+  const getDriverAverageRating = useStore((s) => s.getDriverAverageRating)
   const markInvoiceShown = useStore((s) => s.markInvoiceShown)
   const driverLocation = useStore((s) => s.driverLocation)
   const startGPSTracking = useStore((s) => s.startGPSTracking)
@@ -63,6 +64,16 @@ function DriverDashboard() {
   const [ownerDetails, setOwnerDetails] = useState({})
 
   const myBookings = useMemo(() => (bookings || []).filter((b) => b.driverId === currentUser?.id), [bookings, currentUser?.id])
+  const otherBookings = useMemo(
+    () =>
+      myBookings.filter(
+        (b) =>
+          b.status === BookingStatus.COMPLETED ||
+          b.status === BookingStatus.CANCELLED ||
+          b.status === BookingStatus.EXPIRED
+      ),
+    [myBookings]
+  )
   
   // Track last driver location to prevent redundant route calculations
   const lastDriverLocationRef = useRef(null)
@@ -490,7 +501,7 @@ function DriverDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <p className="text-sm text-gray-400">Average Rating</p>
-          <p className="text-2xl font-bold text-amber-600">⭐ 5.0</p>
+          <p className="text-2xl font-bold text-amber-600">⭐ {getDriverAverageRating(currentUser?.id)}</p>
         </div>
       </div>
 
@@ -720,6 +731,60 @@ function DriverDashboard() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Booking History ─────────────────────────────────── */}
+      {otherBookings.length > 0 && (
+        <div className="mt-10">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">
+            Booking History
+          </h3>
+          <div className="space-y-3">
+            {otherBookings.map((b) => (
+              <div key={b.id} className="space-y-3">
+                <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+                  <div>
+                    <p className="font-medium text-gray-800">
+                      {getSlotName(b.slotId)}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Slot ID: {b.slotId} &middot;{' '}
+                      {new Date(b.requestedAt).toLocaleString()}
+                    </p>
+                  </div>
+                  <span
+                    className={`text-xs px-3 py-1.5 rounded-full font-medium border flex items-center gap-1.5 ${
+                      STATUS_BADGE[b.status] || 'bg-gray-100 text-gray-600 border-gray-300'
+                    }`}
+                  >
+                    <span>{STATUS_ICON[b.status] || '📋'}</span>
+                    <span>{b.status.replace(/_/g, ' ')}</span>
+                  </span>
+                </div>
+
+                {/* Rating Prompt for Completed Bookings */}
+                {b.status === BookingStatus.COMPLETED && !b.driverHasRated && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-amber-800">Rate Your Experience</p>
+                        <p className="text-xs text-amber-600 mt-1">
+                          Please rate the owner for this booking
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleOpenRating(b)}
+                        className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm font-medium"
+                      >
+                        Rate Now
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       )}

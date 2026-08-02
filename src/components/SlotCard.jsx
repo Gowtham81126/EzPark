@@ -78,7 +78,7 @@ function SlotCard({ slot, view, onBook, calculatedDistance }) {
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-500">
             <span className="text-yellow-400">⭐</span>
-            <span>5.0</span>
+            <span>{Number(slot.ownerRating ?? 0).toFixed(1)}</span>
           </div>
         </div>
 
@@ -179,7 +179,7 @@ function SlotCard({ slot, view, onBook, calculatedDistance }) {
       <div className="flex items-center gap-4 mb-3">
         <div className="flex items-center gap-1 text-sm text-gray-500">
           <span className="text-yellow-400">⭐</span>
-          <span>5.0</span>
+          <span>{Number(slot.ownerRating ?? 0).toFixed(1)}</span>
         </div>
       </div>
 

@@ -617,10 +617,8 @@ const useStore = create((set, get) => ({
       }
     }
 
-    // Keep ratings static at 5.0 regardless of cancellation
+    // Do not alter ratings on cancellation
     let updatedBooking = { ...booking }
-    updatedBooking.driverRating = 5.0
-    updatedBooking.ownerRating = 5.0
 
     // Update the booking with new ratings before transitioning
     const { bookings: currentBookings } = get()
@@ -1024,6 +1022,56 @@ const useStore = create((set, get) => ({
   },
 
   // ── Rating System ──────────────────────────────────────────────
+  getDriverAverageRating: (driverId) => {
+    const { bookings, currentUser } = get()
+    const targetId = driverId || currentUser?.id
+    if (!targetId) return '0.0'
+
+    const ratedBookings = (bookings || []).filter(
+      (b) => b.driverId === targetId && b.status === BookingStatus.COMPLETED && b.ownerHasRated && Number(b.driverRating) > 0
+    )
+
+    if (ratedBookings.length === 0) return '0.0'
+
+    const total = ratedBookings.reduce((sum, b) => sum + Number(b.driverRating), 0)
+    return (total / ratedBookings.length).toFixed(1)
+  },
+
+  getOwnerAverageRating: (ownerId) => {
+    const { bookings, currentUser } = get()
+    const targetId = ownerId || currentUser?.id
+    if (!targetId) return '0.0'
+
+    const ratedBookings = (bookings || []).filter(
+      (b) => b.ownerId === targetId && b.status === BookingStatus.COMPLETED && b.driverHasRated && Number(b.ownerRating) > 0
+    )
+
+    if (ratedBookings.length === 0) return '0.0'
+
+    const total = ratedBookings.reduce((sum, b) => sum + Number(b.ownerRating), 0)
+    return (total / ratedBookings.length).toFixed(1)
+  },
+
+  getSlotAverageRating: (slotId, ownerId) => {
+    const { bookings } = get()
+    if (!slotId) return '0.0'
+
+    const ratedBookings = (bookings || []).filter(
+      (b) => b.slotId === slotId && b.status === BookingStatus.COMPLETED && b.driverHasRated && Number(b.ownerRating) > 0
+    )
+
+    if (ratedBookings.length > 0) {
+      const total = ratedBookings.reduce((sum, b) => sum + Number(b.ownerRating), 0)
+      return (total / ratedBookings.length).toFixed(1)
+    }
+
+    if (ownerId) {
+      return get().getOwnerAverageRating(ownerId)
+    }
+
+    return '0.0'
+  },
+
   submitRating: async (bookingId, userType, ratings) => {
     const { bookings, parkingSlots, addNotification, addSystemLog } = get()
     const idx = bookings.findIndex((b) => b.id === bookingId)
@@ -1039,52 +1087,70 @@ const useStore = create((set, get) => ({
 
     const booking = bookings[idx]
     
-    // Calculate average rating from the three criteria
-    const avgRating = ((ratings.punctuality + ratings.behavior + ratings.reliability) / 3).toFixed(1)
+    // Calculate numeric rating value submitted
+    let ratingNum = 0
+    if (typeof ratings === 'number') {
+      ratingNum = ratings
+    } else if (ratings.overall) {
+      ratingNum = Number(ratings.overall)
+    } else if (ratings.punctuality || ratings.behavior || ratings.reliability) {
+      const p = Number(ratings.punctuality || 0)
+      const b = Number(ratings.behavior || 0)
+      const r = Number(ratings.reliability || 0)
+      ratingNum = (p + b + r) / 3
+    }
+
+    const ratingValue = parseFloat(ratingNum.toFixed(1))
+    const avgRatingStr = ratingValue.toFixed(1)
 
     const updatedBooking = { ...booking }
     
     if (userType === 'driver') {
       // Driver is rating the owner
       updatedBooking.ownerRatings = ratings
-      updatedBooking.ownerRating = 5.0
+      updatedBooking.ownerRating = ratingValue
       updatedBooking.driverHasRated = true
-
-      // Update the parking slot's owner rating
-      const updatedSlots = parkingSlots.map((slot) => {
-        if (slot.id === booking.slotId) {
-          return { ...slot, ownerRating: 5.0 }
-        }
-        return slot
-      })
-      set({ parkingSlots: updatedSlots })
-      get().saveParkingSlotsToStorage()
-      
-      // Persist the slot rating update to localStorage via userDatabase
-      const updatedSlot = updatedSlots.find(s => s.id === booking.slotId)
-      if (updatedSlot) {
-        await userDatabase.updateParkingSlot(booking.slotId, { ownerRating: 5.0 })
-      }
     } else {
       // Owner is rating the driver
       updatedBooking.driverRatings = ratings
-      updatedBooking.driverRating = 5.0
+      updatedBooking.driverRating = ratingValue
       updatedBooking.ownerHasRated = true
     }
 
-    // Update the booking
+    // Update bookings state
     const updatedBookings = [...bookings]
     updatedBookings[idx] = updatedBooking
     set({ bookings: updatedBookings })
     get().saveBookingsToStorage()
 
-    // Also persist the rating update to localStorage via userDatabase
+    // Persist booking rating update
     await userDatabase.updateBooking(bookingId, updatedBooking)
+
+    // Recalculate slot's owner rating dynamically
+    const slotId = booking.slotId
+    const slotBookings = updatedBookings.filter(
+      (b) => b.slotId === slotId && b.status === BookingStatus.COMPLETED && b.driverHasRated && Number(b.ownerRating) > 0
+    )
+    let newSlotRating = 0.0
+    if (slotBookings.length > 0) {
+      const sum = slotBookings.reduce((acc, b) => acc + Number(b.ownerRating), 0)
+      newSlotRating = parseFloat((sum / slotBookings.length).toFixed(1))
+    }
+
+    const updatedSlots = parkingSlots.map((slot) => {
+      if (slot.id === slotId) {
+        return { ...slot, ownerRating: newSlotRating }
+      }
+      return slot
+    })
+    set({ parkingSlots: updatedSlots })
+    get().saveParkingSlotsToStorage()
+    await userDatabase.updateParkingSlot(slotId, { ownerRating: newSlotRating })
 
     addSystemLog({
       type: 'action',
-      message: `${userType} submitted rating for booking ${bookingId}: ${avgRating}/5`,
-      details: { bookingId, userType, avgRating }
+      message: `${userType} submitted rating for booking ${bookingId}: ${avgRatingStr}/5`,
+      details: { bookingId, userType, avgRating: avgRatingStr }
     })
 
     // Notify the other user if they haven't rated yet
@@ -1106,23 +1172,14 @@ const useStore = create((set, get) => ({
   },
 
   // ── Slot Visibility Logic (based on owner rating) ──────────────
-  getVisibleSlots: (minOwnerRating = 3.0) => {
+  getVisibleSlots: (minOwnerRating = 0.0) => {
     const { parkingSlots } = get()
     return parkingSlots.filter((slot) => slot.ownerRating >= minOwnerRating)
   },
 
   // ── Booking Priority Logic (based on driver rating) ────────────
   getDriverPriorityScore: (driverId) => {
-    const { bookings } = get()
-    const driverBookings = bookings.filter((b) => b.driverId === driverId && b.status === BookingStatus.COMPLETED)
-
-    if (driverBookings.length === 0) {
-      return 5.0 // Default score for new drivers
-    }
-
-    // Calculate average rating from all completed bookings
-    const totalRating = driverBookings.reduce((sum, b) => sum + b.driverRating, 0)
-    return (totalRating / driverBookings.length).toFixed(1)
+    return get().getDriverAverageRating(driverId)
   },
 
   sortBookingsByDriverPriority: (bookings) => {
@@ -1275,7 +1332,7 @@ const useStore = create((set, get) => ({
       price,
       distance: 0,
       isAvailable: true,
-      ownerRating: 5.0,
+      ownerRating: 0.0,
       ownerId,
       type: 'open',
       totalSlots,

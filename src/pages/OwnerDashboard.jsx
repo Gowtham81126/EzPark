@@ -13,6 +13,8 @@ function OwnerDashboard() {
   const bookings = useStore((s) => s.bookings)
   const notifications = useStore((s) => s.notifications)
   const submitRating = useStore((s) => s.submitRating)
+  const getOwnerAverageRating = useStore((s) => s.getOwnerAverageRating)
+  const getDriverAverageRating = useStore((s) => s.getDriverAverageRating)
   const ownerVerifyExitOTP = useStore((s) => s.ownerVerifyExitOTP)
   const calculatePaymentBreakdown = useStore((s) => s.calculatePaymentBreakdown)
   const markInvoiceShownToOwner = useStore((s) => s.markInvoiceShownToOwner)
@@ -188,6 +190,14 @@ function OwnerDashboard() {
     setInvoiceBreakdown(null)
   }
 
+  const handleContinueToRating = () => {
+    const bookingToRate = completedBooking
+    setCompletedBooking(null)
+    setInvoiceBreakdown(null)
+    setRatingBooking(bookingToRate)
+    setShowRatingModal(true)
+  }
+
   // Monitor for completed bookings to show invoice
   useEffect(() => {
     const justCompletedBooking = ownerBookings.find(
@@ -224,7 +234,7 @@ function OwnerDashboard() {
     [BookingStatus.EXPIRED]: '⏰',
   }
 
-  const avgRating = '5.0'
+  const avgRating = getOwnerAverageRating(currentUser?.id)
 
 
   return (
@@ -353,7 +363,7 @@ function OwnerDashboard() {
 
                         <div className="bg-white rounded-lg p-3 mb-3">
                           <p className="text-sm text-gray-600 mb-1">Driver rating:</p>
-                          <p className="text-lg font-bold text-blue-600">⭐ 5.0</p>
+                          <p className="text-lg font-bold text-blue-600">⭐ {getDriverAverageRating(b.driverId)}</p>
                         </div>
 
                         {/* Exit OTP Input - Owner enters driver's exit OTP */}
@@ -480,7 +490,7 @@ function OwnerDashboard() {
 
                         <div className="bg-white rounded-lg p-3 mb-3">
                           <p className="text-sm text-gray-600 mb-1">Driver rating:</p>
-                          <p className="text-lg font-bold text-blue-600">⭐ 5.0</p>
+                          <p className="text-lg font-bold text-blue-600">⭐ {getDriverAverageRating(b.driverId)}</p>
                         </div>
 
                         {/* Exit OTP Input - Owner enters driver's exit OTP */}
@@ -595,6 +605,7 @@ function OwnerDashboard() {
               booking={completedBooking}
               breakdown={invoiceBreakdown}
               onClose={handleCloseInvoice}
+              onContinue={handleContinueToRating}
               userType="owner"
             />
           </div>
