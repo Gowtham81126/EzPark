@@ -6,6 +6,7 @@ import InvoiceScreen from '../components/InvoiceScreen'
 import RatingForm from '../components/RatingForm'
 import BookingPanel from '../components/BookingPanel'
 import RouteMap from '../components/RouteMap'
+import CancelConfirmationModal from '../components/CancelConfirmationModal'
 import ErrorBoundary from '../components/ErrorBoundary'
 import { formatOverstayTime } from '../utils/overstayCalculator'
 import { isParkingOpen } from '../utils/timeAvailability'
@@ -57,6 +58,8 @@ function DriverDashboard() {
   const [invoiceBreakdown, setInvoiceBreakdown] = useState(null)
   const [showRatingModal, setShowRatingModal] = useState(false)
   const [ratingBooking, setRatingBooking] = useState(null)
+  const [showCancelModal, setShowCancelModal] = useState(false)
+  const [cancelBookingId, setCancelBookingId] = useState(null)
   const [locationError, setLocationError] = useState(null)
   const [routeDistances, setRouteDistances] = useState({})
   const [selectedFilter, setSelectedFilter] = useState('all')
@@ -65,13 +68,19 @@ function DriverDashboard() {
 
   const myBookings = useMemo(() => (bookings || []).filter((b) => b.driverId === currentUser?.id), [bookings, currentUser?.id])
   const otherBookings = useMemo(
-    () =>
-      myBookings.filter(
+    () => {
+      const filtered = myBookings.filter(
         (b) =>
           b.status === BookingStatus.COMPLETED ||
           b.status === BookingStatus.CANCELLED ||
           b.status === BookingStatus.EXPIRED
-      ),
+      )
+      return [...filtered].sort((a, b) => {
+        const dateA = new Date(a.confirmedAt || a.requestedAt || 0).getTime()
+        const dateB = new Date(b.confirmedAt || b.requestedAt || 0).getTime()
+        return dateB - dateA
+      })
+    },
     [myBookings]
   )
   
@@ -355,11 +364,20 @@ function DriverDashboard() {
     }
   }
 
-  const handleCancelBooking = (bookingId) => {
-    const result = cancelBooking(bookingId, 'driver_no_show')
-    if (!result.success) {
-      console.error('Cancel failed:', result.error)
+  const handleOpenCancelModal = (bookingId) => {
+    setCancelBookingId(bookingId)
+    setShowCancelModal(true)
+  }
+
+  const handleConfirmCancelBooking = () => {
+    if (cancelBookingId) {
+      const result = cancelBooking(cancelBookingId, 'driver_no_show')
+      if (!result.success) {
+        console.error('Cancel failed:', result.error)
+      }
     }
+    setShowCancelModal(false)
+    setCancelBookingId(null)
   }
 
   const handleBook = (slot) => {
@@ -608,7 +626,7 @@ function DriverDashboard() {
 
                     {/* Cancel Button */}
                     <button
-                      onClick={() => handleCancelBooking(confirmedBooking.id)}
+                      onClick={() => handleOpenCancelModal(confirmedBooking.id)}
                       className="w-full py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-colors"
                     >
                       Cancel Booking
@@ -751,7 +769,9 @@ function DriverDashboard() {
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       Slot ID: {b.slotId} &middot;{' '}
-                      {new Date(b.requestedAt).toLocaleString()}
+                      {b.confirmedAt || b.requestedAt
+                        ? new Date(b.confirmedAt || b.requestedAt).toLocaleString()
+                        : 'Date unavailable'}
                     </p>
                   </div>
                   <span
@@ -822,6 +842,14 @@ function DriverDashboard() {
           onCancel={handleCloseBookingPanel}
         />
       )}
+
+      {/* Cancel Confirmation Modal */}
+      <CancelConfirmationModal
+        isOpen={showCancelModal}
+        onConfirm={handleConfirmCancelBooking}
+        onClose={() => { setShowCancelModal(false); setCancelBookingId(null) }}
+        userType="driver"
+      />
       </div>
     </div>
   )

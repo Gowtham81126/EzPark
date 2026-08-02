@@ -67,7 +67,14 @@ function OwnerDashboard() {
   const confirmedBookings = useMemo(() => ownerBookings.filter((b) => b.status === BookingStatus.CONFIRMED), [ownerBookings])
   const activeBookings = useMemo(() => ownerBookings.filter((b) => b.status === BookingStatus.ACTIVE), [ownerBookings])
   const overstayingBookings = useMemo(() => ownerBookings.filter((b) => b.status === BookingStatus.OVERSTAYING), [ownerBookings])
-  const otherBookings = useMemo(() => ownerBookings.filter((b) => ![BookingStatus.CONFIRMED, BookingStatus.ACTIVE, BookingStatus.OVERSTAYING].includes(b.status)), [ownerBookings])
+  const otherBookings = useMemo(() => {
+    const filtered = ownerBookings.filter((b) => ![BookingStatus.CONFIRMED, BookingStatus.ACTIVE, BookingStatus.OVERSTAYING].includes(b.status))
+    return [...filtered].sort((a, b) => {
+      const dateA = new Date(a.confirmedAt || a.requestedAt || 0).getTime()
+      const dateB = new Date(b.confirmedAt || b.requestedAt || 0).getTime()
+      return dateB - dateA
+    })
+  }, [ownerBookings])
 
   const getSlotName = (slotId) => {
     const slot = parkingSlots.find((s) => s.id === slotId)
@@ -548,7 +555,9 @@ function OwnerDashboard() {
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
                         Driver: {b.driverId} &middot;{' '}
-                        {new Date(b.requestedAt).toLocaleString()}
+                        {b.confirmedAt || b.requestedAt
+                          ? new Date(b.confirmedAt || b.requestedAt).toLocaleString()
+                          : 'Date unavailable'}
                       </p>
                     </div>
                     <span

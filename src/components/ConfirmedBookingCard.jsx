@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useStore, BookingStatus } from '../store/useStore'
 import OwnerRouteMap from './OwnerRouteMap'
+import CancelConfirmationModal from './CancelConfirmationModal'
 import { userDatabase } from '../utils/userDatabase'
 
 function ConfirmedBookingCard({ booking }) {
@@ -15,6 +16,7 @@ function ConfirmedBookingCard({ booking }) {
   const [otpInput, setOtpInput] = useState('')
   const [otpError, setOtpError] = useState('')
   const [driver, setDriver] = useState(null)
+  const [showCancelModal, setShowCancelModal] = useState(false)
 
   useEffect(() => {
     const fetchDriver = async () => {
@@ -44,12 +46,16 @@ function ConfirmedBookingCard({ booking }) {
   const slot = parkingSlots.find((s) => s.id === booking.slotId)
   const slotName = slot?.name || booking.slotId
 
-  const handleCancel = () => {
-    console.log('Cancel clicked for booking:', booking.id, 'Status:', booking.status)
+  const handleOpenCancelModal = () => {
+    setShowCancelModal(true)
+  }
+
+  const handleConfirmCancel = () => {
+    setShowCancelModal(false)
+    console.log('Cancel confirmed for booking:', booking.id, 'Status:', booking.status)
     const result = cancelBooking(booking.id, 'owner_no_show')
     if (!result.success) {
       console.error('Cancel failed:', result.error, result.message)
-      alert(result.message || 'Failed to cancel booking')
     } else {
       console.log('Cancel successful for booking:', booking.id)
     }
@@ -147,7 +153,7 @@ function ConfirmedBookingCard({ booking }) {
 
           {/* Cancel Button */}
           <button
-            onClick={handleCancel}
+            onClick={handleOpenCancelModal}
             className="w-full py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-colors"
           >
             Cancel Booking
@@ -166,6 +172,14 @@ function ConfirmedBookingCard({ booking }) {
           </div>
         )}
       </div>
+
+      {/* Cancellation Confirmation Modal */}
+      <CancelConfirmationModal
+        isOpen={showCancelModal}
+        onConfirm={handleConfirmCancel}
+        onClose={() => setShowCancelModal(false)}
+        userType="owner"
+      />
     </div>
   )
 }

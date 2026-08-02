@@ -284,13 +284,14 @@ export const userDatabase = {
       const bookings = getFromStorage(STORAGE_KEYS.BOOKINGS)
       const bookingIndex = bookings.findIndex(b => b.id === bookingId)
       
+      let updatedBooking
       if (bookingIndex === -1) {
-        return { success: false, error: 'Booking not found' }
+        updatedBooking = { id: bookingId, ...updateData }
+        bookings.push(updatedBooking)
+      } else {
+        updatedBooking = { ...bookings[bookingIndex], ...updateData }
+        bookings[bookingIndex] = updatedBooking
       }
-
-      // Update the booking with new data
-      const updatedBooking = { ...bookings[bookingIndex], ...updateData }
-      bookings[bookingIndex] = updatedBooking
 
       const saveResult = saveToStorage(STORAGE_KEYS.BOOKINGS, bookings)
 

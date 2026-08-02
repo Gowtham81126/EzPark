@@ -155,7 +155,7 @@ export function createBooking({ driverId, ownerId, slotId, estimatedArrivalMinut
     ownerId,
     slotId,
     status: BookingStatus.CONFIRMED,
-    requestedAt: null,
+    requestedAt: new Date().toISOString(),
     confirmedAt: new Date().toISOString(),
     startTime: null,
     endTime: null,
