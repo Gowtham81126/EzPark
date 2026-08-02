@@ -116,10 +116,27 @@ export const userDatabase = {
     }
   },
 
+  // Update user fields by ID
+  updateUser: async (userId, fields) => {
+    try {
+      const users = getFromStorage(STORAGE_KEYS.USERS)
+      const idx = users.findIndex(u => u.id === userId)
+      if (idx === -1) return { success: false, error: 'User not found' }
+      users[idx] = { ...users[idx], ...fields }
+      const result = saveToStorage(STORAGE_KEYS.USERS, users)
+      if (result.success) return { success: true, user: users[idx] }
+      return result
+    } catch (error) {
+      console.error('Error updating user:', error)
+      return { success: false, error: 'Failed to update user' }
+    }
+  },
+
   // Clear all users (for testing purposes)
   clearAllUsers: async () => {
     return saveToStorage(STORAGE_KEYS.USERS, [])
   },
+
 
   // ── Parking Slot Operations ───────────────────────────────────────
 
