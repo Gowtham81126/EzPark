@@ -1,6 +1,6 @@
-# 🚗 ParkEasy
+# 🚗 EzPark
 
-ParkEasy is a modern web application that helps users find and navigate parking locations  using an interactive map interface. It leverages real-time mapping and routing features to provide a smooth parking experience.
+EzPark is a modern web application that helps users find and navigate parking locations  using an interactive map interface. It leverages real-time mapping and routing features to provide a smooth parking experience.
 
 ---
 
@@ -31,8 +31,8 @@ Follow these steps to run the project locally:
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/Gowtham81126/ParkEasy.git
-cd parkeasy
+git clone https://github.com/Gowtham81126/EzPark.git
+cd EzPark
 ```
 
 ### 2️⃣ Install dependencies
@@ -59,7 +59,12 @@ http://localhost:5173
 
 ## 📸 Screenshots
 
-<img width="1898" height="863" alt="Screenshot 2026-04-25 233330" src="https://github.com/user-attachments/assets/fed8ed52-b5dc-44fe-9aac-417357ac854c" />
+<img width="1896" height="863" alt="Screenshot 2026-08-02 164031" src="https://github.com/user-attachments/assets/b0677fd7-faf0-4de1-b77d-ea2068f51ee1" />
+
+
+
+<img width="1899" height="863" alt="Screenshot 2026-08-02 164304" src="https://github.com/user-attachments/assets/d6f97a49-d7bc-450b-b229-e0856a33561c" />
+
 
 ##
 
